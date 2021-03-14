@@ -1,12 +1,13 @@
 /*******************************************************************************
  * Class:      CISP 360
- * Program:    Assignment #0 - Program Title
+ * Program:    Spring'21 Midterm - AA Airlines Multipurpose Application
  * Author:     Tyler Swindell - w1911183
  * Prof:       A. Mukarram
- * Date:       Xxx. 00, 2021 || 00/00/2021
- * Desc:       A program that
- *             ...
- *             ....
+ * Date:       Mar. 13, 2021 || 03/13/2021
+ * Desc:       A program that generate menus for customers and employees to
+ *             accomplish various tasks such as determine flight and departure
+ *             times/delays, go through emergency scenario sequences, reserve
+ *             and cancel seat reservations as well as watch movies.
  ******************************************************************************/
 
 /*********************************
