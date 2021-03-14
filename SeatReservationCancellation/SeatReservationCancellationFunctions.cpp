@@ -14,10 +14,10 @@
 #define EMPTY_SEAT      ' '                                       // Symbol used to indicate an empty seat
 #define BOOKED_SEAT     'X'                                       // Symbol used to indicate an empty seat
 
-/********************************************************
+/*******************************************************************************
  * Main Driver Module:
  * Called in 'SeatReservationCancellation.cpp'
- *******************************************************/
+ *******************************************************************************/
 void seatReservationCancellationMenu()
 {
    // After adding value to symbolic constant add 'OPTION#' to array
@@ -31,15 +31,12 @@ void seatReservationCancellationMenu()
 
    // Calculates and stores quantity of menu options
    short optionCount = sizeof(optionPrompts)/sizeof(optionPrompts[0]);
-
    // Stores menu option key value pairs
    char optionKeys[optionCount];
-
    // Pushes first char of each option string to be the menu key value
    for (short i = 0; i < optionCount; i++) {
       optionKeys[i] = toupper(optionPrompts[i].at(0));
    }
-
    // Stores Row Indicators
    char seatingRows[ROWS];
    for (short row = 0; row < ROWS; row++)
@@ -52,15 +49,12 @@ void seatReservationCancellationMenu()
    char seatingArr[ROWS][COLUMNS];
    for (short row = 0; row < ROWS; row++) {
       for (short col = 0;  col < COLUMNS; col++)
-      {
          seatingArr[row][col] = ' ';
-      }
    }
-      
+   // populates seating arrays
    setupSeats(seatingRows, seatingColumns, seatingArr);
-
+   // calculates total seat count
    short totalSeats = ROWS * COLUMNS;
-
    // Controls looping of current menu
    bool quitMenu = false;
    // Main loop continues until 'Q' quit option is chosen
@@ -75,17 +69,15 @@ void seatReservationCancellationMenu()
       if (validChoice) { 
          decisionHandler(menuChoice, seatingRows, seatingColumns, 
             seatingArr, totalSeats, quitMenu); 
-         } else {
-            inputError(INVALID_ENTRY);
-         }
+      } else { inputError(INVALID_ENTRY); }
    } while (!quitMenu);
 }
 
-/********************************************************
+/*******************************************************************************
  * Driver Module:
  * Calls modules to setup initial seating setting based
  * on predetermined symbolic constants
- *******************************************************/
+ *******************************************************************************/
 void setupSeats(char seatingRows[ROWS], char seatingColumns[COLUMNS], char seatingArr[ROWS][COLUMNS])
 {
    // Creates Row Indicators / Parallel to seatingArr's 'ROWS' array
@@ -94,39 +86,36 @@ void setupSeats(char seatingRows[ROWS], char seatingColumns[COLUMNS], char seati
    linearCounter(CHAR_A, (CHAR_A + (COLUMNS-1)), seatingColumns);
    // Sets all seats to avaliable
    seatGenerator(seatingArr);
-   // Keeps track of total seats on flight
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * Populates main seating array with empty seats
- *******************************************************/
+ *******************************************************************************/
 void seatGenerator(char seatingOutput[ROWS][COLUMNS])
 {
    for (short row = 0; row < ROWS; row++) {
-      for (short col = 0; col < COLUMNS; col++) {
+      for (short col = 0; col < COLUMNS; col++)
          seatingOutput[row][col] = EMPTY_SEAT;
-      }
    }   
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * creates array of chars from a specified starting ascii
  * to a specified ending in linear order
- *******************************************************/
+ *******************************************************************************/
 void linearCounter(short start, short finish, char countOutput[])
 {
    short count = 0;
-   for (short current = start; current <= finish; current++, count++) {
+   for (short current = start; current <= finish; current++, count++)
       countOutput[count] = static_cast <char> (current);
-   }
 }
 
-/********************************************************
+/*******************************************************************************
  * Output Module:
  * Main menu options, displays input prompt/options
- *******************************************************/
+ *******************************************************************************/
 void seatReservationAndCancellationMenuDisplay(string optionPrompts[], char optionKeys[], short count)
 {
    // Displays menu title to screen
@@ -142,10 +131,10 @@ void seatReservationAndCancellationMenuDisplay(string optionPrompts[], char opti
    }
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Function:
  * Determines which input was entered, after validation
- *******************************************************/
+ *******************************************************************************/
 void decisionHandler(char choice, char seatingRows[], char seatingColumns[], 
    char seatingArr[ROWS][COLUMNS], short totalSeats, bool &quit)
 {
@@ -177,11 +166,11 @@ void decisionHandler(char choice, char seatingRows[], char seatingColumns[],
    }
 }
 
-/********************************************************
+/*******************************************************************************
  * Driver Module:
  * Manages/calls the modules that display 
  * current seating statuses 
- *******************************************************/
+ *******************************************************************************/
 void displaySeatsOption0(char seatingRows[], char seatingColumns[], char seatingArr[ROWS][COLUMNS])
 {
    displayOptionHeader("Seat Chart");
@@ -190,10 +179,10 @@ void displaySeatsOption0(char seatingRows[], char seatingColumns[], char seating
    newLine();
 }
 
-/********************************************************
+/*******************************************************************************
  * Driver Module:
  * Manages/calls the functions that set reservations
- *******************************************************/
+ *******************************************************************************/
 void seatReservation1(char seatingRows[], char seatingColumns[], char seatingArr[ROWS][COLUMNS])
 {
    if (calculateAvaliableSeats(seatingArr) == 0)
@@ -214,10 +203,10 @@ void seatReservation1(char seatingRows[], char seatingColumns[], char seatingArr
    }
 }
 
-/********************************************************
+/*******************************************************************************
  * Driver Module:
  * Manages/calls the functions that cancel reservations
- *******************************************************/
+ *******************************************************************************/
 void seatCancellation2(char seatingRows[], char seatingColumns[], char seatingArr[ROWS][COLUMNS])
 {
    if (calculateAvaliableSeats(seatingArr) == (ROWS * COLUMNS))
@@ -238,20 +227,20 @@ void seatCancellation2(char seatingRows[], char seatingColumns[], char seatingAr
    }
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * Exits program with successful exit code
- *******************************************************/
+ *******************************************************************************/
 void quitOption3()
 {
    print(QUIT_MSG, true, 2);
    exit(EXIT_SUCCESS);
 }
 
-/********************************************************
+/*******************************************************************************
  * Output Module:
  * Displays/formats column indicators
- *******************************************************/
+ *******************************************************************************/
 void displayColumnHeader(char seatingColumns[])
 {
    // Prints column indicators
@@ -264,11 +253,11 @@ void displayColumnHeader(char seatingColumns[])
    newLine();
 }
 
-/********************************************************
+/*******************************************************************************
  * Output Module:
  * Displays/formats current rows indicator as well as 
  * seat avaliablity for eachg column in the row
- *******************************************************/
+ *******************************************************************************/
 void displayRows(char seatingRows[], char seatingArr[ROWS][COLUMNS])
 {
    for (short row = 0; row < ROWS; row++) {
@@ -285,10 +274,10 @@ void displayRows(char seatingRows[], char seatingArr[ROWS][COLUMNS])
    }
 }
 
-/********************************************************
+/*******************************************************************************
  * Output Module:
  * Displays current seat in interation's avaliability
- *******************************************************/
+ *******************************************************************************/
 void displayCurrentSeating(short currentRow, char seatingArr[ROWS][COLUMNS])
 {
    // iterates through each column of the currentRow
@@ -299,35 +288,34 @@ void displayCurrentSeating(short currentRow, char seatingArr[ROWS][COLUMNS])
    }
 }
 
-/********************************************************
+/*******************************************************************************
  * Output Module:
  * Displays current seat availability count
- *******************************************************/
+ *******************************************************************************/
 void displayAvaliableSeats(char seatingArr[ROWS][COLUMNS], short totalSeats)
 {
-   cout << "There are " << calculateAvaliableSeats(seatingArr) << " out of " << totalSeats << " seats avaliable";
+   cout << "There are " << calculateAvaliableSeats(seatingArr) 
+        << " out of " << totalSeats << " seats avaliable";
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * Counts how many seats are empty
- *******************************************************/
+ *******************************************************************************/
 short calculateAvaliableSeats(char seatingArr[ROWS][COLUMNS])
 {
    short seatCount = 0;
-   for (short row = 0; row < ROWS; row++) {
-      for (short col = 0; col < COLUMNS; col++) {
+   for (short row = 0; row < ROWS; row++)
+      for (short col = 0; col < COLUMNS; col++)
          if (seatingArr[row][col] == EMPTY_SEAT) 
             seatCount++;
-      }
-   }
    return seatCount;
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * Returns a specified seat ID in the format [RowColumn]
- *******************************************************/
+ *******************************************************************************/
 string getSeat(short rowNum, char colLtr) 
 {
    string seat = "";
@@ -335,10 +323,10 @@ string getSeat(short rowNum, char colLtr)
    return seat += colLtr;
 }
 
-/********************************************************
+/*******************************************************************************
  * Input Module:
  * Prompts and validates user row input
- *******************************************************/
+ *******************************************************************************/
 short getSeatRow(char seatingRows[])
 {
    bool validInput = false;                   // tracks if input is in bounds
@@ -351,20 +339,16 @@ short getSeatRow(char seatingRows[])
    do {
       cout << "Please enter the row number " << firstRow << '-' << lastRow << ": ";
       cin >> row;
-      if (cin.fail()) {
-         validInput = false;
-      } else {
-         validInput = (row < firstRow || row > lastRow) ? false : true;
-      }
+      if (!cin.fail()) validInput = (row < firstRow || row > lastRow) ? false : true;
       if (!validInput) inputError(INVALID_ENTRY);
    } while (!validInput);
    return row;
 }
 
-/********************************************************
+/*******************************************************************************
  * Input Module:
  * Prompts and validates user column input
- *******************************************************/
+ *******************************************************************************/
 char getSeatColumn(char seatingColumns[])
 {
    bool validInput = false;                              // tracks if input is in bounds
@@ -391,10 +375,10 @@ char getSeatColumn(char seatingColumns[])
    return column;
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * Reserves seat if available
- *******************************************************/
+ *******************************************************************************/
 void bookSeat(char seatingArr[ROWS][COLUMNS], short rowNum, short colNum, string seat)
 {
    if (seatCheck(seatingArr, rowNum, colNum)) {
@@ -406,10 +390,10 @@ void bookSeat(char seatingArr[ROWS][COLUMNS], short rowNum, short colNum, string
    newLine();
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * Cancels seat if reserved
- *******************************************************/
+ *******************************************************************************/
 void cancelSeat(char seatingArr[ROWS][COLUMNS], short rowNum, short colNum, string seat)
 {
    if (!seatCheck(seatingArr, rowNum, colNum)) {
@@ -421,11 +405,11 @@ void cancelSeat(char seatingArr[ROWS][COLUMNS], short rowNum, short colNum, stri
    newLine();
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Module:
  * Determines if seat is avaliable or not
  * Returns false is unavailable, true is available
- *******************************************************/
+ *******************************************************************************/
 bool seatCheck(char seatingArr[ROWS][COLUMNS], short rowNum, short colNum)
 {
    if (seatingArr[rowNum-1][colNum] == EMPTY_SEAT) return true;

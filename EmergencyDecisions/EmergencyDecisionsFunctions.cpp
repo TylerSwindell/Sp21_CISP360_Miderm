@@ -8,10 +8,10 @@
 #define ENG_FAIL_1      "Engine Failure"           // Second option on menu
 #define ICING_2         "Inflight Icing"           // Third option on menu
 
-/********************************************************
+/*******************************************************************************
  * Main Driver Module:
  * Called in 'EmergencyDecisions.cpp'
- *******************************************************/
+ ******************************************************************************/
 void emergencyDecisionsMenu()
 {
    // After adding value to symbolic constant add 'OPTION#' to array
@@ -27,12 +27,10 @@ void emergencyDecisionsMenu()
    int optionCount = sizeof(optionPrompts)/sizeof(optionPrompts[0]);
    // Stores menu option key value pairs
    char optionKeys[optionCount];
-
    // Pushes first char of each option string to be the menu key value
    for (int i = 0; i < optionCount; i++) {
       optionKeys[i] = toupper(optionPrompts[i].at(0));
    }
-
    // Controls looping of current menu
    bool quitMenu = false;
    // Main loop continues until 'Q' quit option is chosen
@@ -48,10 +46,10 @@ void emergencyDecisionsMenu()
    } while (!quitMenu);
 }
 
-/********************************************************
+/*******************************************************************************
  * Processing Function:
  * Determines which input was entered, after validation
- *******************************************************/
+ ******************************************************************************/
 void emergencyDecisionHandler(char choice, bool &quit)
 {
    // Matches input to 
@@ -76,20 +74,20 @@ void emergencyDecisionHandler(char choice, bool &quit)
    if (choice != 'Q') resetStreamBuffer();
 }
 
-/********************************************************
+/*******************************************************************************
  * Output Module:
  * Prints message for 'Communication Failure' option
- *******************************************************/
+ ******************************************************************************/
 void comFaliureOption0()
 {
    print("Switch to alternate radio.", true, 2);
 }
 
-/********************************************************
+/*******************************************************************************
  * Input/Processing/Output Module:
  * Issues a series of questions for user to determine 
  * solution to 'Engine Faliure' menu option
- *******************************************************/
+ ******************************************************************************/
 void engFailureOption1()
 {
    bool airborne = yesOrNo("Are you airborne?");
@@ -136,24 +134,21 @@ void engFailureOption1()
    }
 }
 
-/********************************************************
+/*******************************************************************************
  * Input/Processing/Output Module:
  * Based on user estimated amount of ice module 
  * determines recommended power level
- *******************************************************/
+ ******************************************************************************/
 void icingOption2()
 {
-   bool validInput;
+   bool validInput = false;
    double estimate;
-
    // Loop that prompts user for estimated ice depth input 
    do {
       print("How much ice estimated on wings? (0-10mm)", true);
       cin >> estimate;
       // Checks if none double is entered
-      if (cin.fail()) {
-         (validInput = false);
-      } else {
+      if (!cin.fail()) {
          // If double is entered check if input is in range
          validInput = (estimate >= 0 && estimate <= 10) ? true : false;
       }
@@ -164,9 +159,7 @@ void icingOption2()
    
    // To use switch in this instance the value must be an integer
    // Rounding 
-   int roundedEstimate;
-   (estimate < 1) ? roundedEstimate = floor(estimate) : roundedEstimate = ceil(estimate);
-
+   int roundedEstimate = (estimate < 1) ? floor(estimate) : ceil(estimate);
    // Switch used over if else for readability
    switch (roundedEstimate) {
       // If input is between 0.0 & 0.9

@@ -17,9 +17,8 @@ functions:
 
 # Cleans up all compiled files in src folder 
 clean:
-	rm out/*.o AirportApplication
+	rm out/* AirportApplication
 	rmdir out
 
 again: clean
-	make clean
 	make

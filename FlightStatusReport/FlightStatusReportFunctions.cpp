@@ -109,28 +109,24 @@ void departureOption1()
  *******************************************************/
 void fileInput(string filename) 
 {
+   // stores in stream file
    ifstream inFile;
-
    // flight#, gate#, airport location, scheduled time, actual time
    string flightData[FLIGHT_FIELDS];
-            
-   int      delay;               // Calculated delay 
+   // Calculated delay   
+   int delay;               
    //open the file 
    bool ok = openFile(filename, inFile);
    //if open successfully
    if (ok) {
       displayFlightInfoHeader();
       //while there are data sets
-
       string line;
       while (getline(inFile, line)) {
-
          // Reads all input within a given file
          dataInput(inFile, flightData);
-
          //calculate delay
          delay = calculateActual(stoi(flightData[3]), stoi(flightData[4]));
-
          // displays all flight info
          displayFlightInfo(flightData, delay);
       }
@@ -173,7 +169,6 @@ void dataInput(ifstream &inFile, string flightData[])
    for (short i = 0; i < FLIGHT_FIELDS; i++) {
       inFile >> flightData[i];
    }
-   
 }
 
 /*******************************************************************************
@@ -185,12 +180,10 @@ void dataInput(ifstream &inFile, string flightData[])
 int calculateActual(int scheduled, int actual)
 {
    int diff = 0;
-
    int timeData[2] = { scheduled, actual };
    int tempData[2];
 
    if (scheduled != actual) {
-
       for (int i = 0; i < 2; i++) {
          //divide tempActual by 100
          tempData[i] = timeData[i] / 100;
@@ -208,9 +201,7 @@ int calculateActual(int scheduled, int actual)
       //calculate difference between tempActual and tempScheduled
       diff = tempData[1] - tempData[0];
    }
-
    return diff;
-
 }
 
 /*******************************************************************************
